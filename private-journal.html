@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindHaven | Private Journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #4678a8;
+      --color-primary-dark: #3a628a;
+      --color-bg: #f5faf8;
+      --color-hero: #f7f2e5;
+      --color-text: #0b283a;
+      --color-text-muted: #3d5a6e;
+      --color-white: #ffffff;
+      --color-accent-soft: #dcebe6;
+      --color-border: #d8e4df;
+      --color-input-bg: #f9fcfa;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 4px 20px rgba(11, 40, 58, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 40, 58, 0.06);
+      --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s var(--ease-out);
+      --transition-smooth: 0.3s var(--ease-out);
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --max-width: 900px;
+      --header-padding: 18px 8%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 340px;
+      height: 340px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(110, 180, 120, 0.14) 0%, transparent 72%);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(70, 120, 168, 0.12) 0%, transparent 72%);
+    }
+
+    html::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      top: 35%;
+      right: -160px;
+      background: radial-gradient(circle, rgba(220, 235, 230, 0.45) 0%, transparent 70%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .site-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--header-padding);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(11, 40, 58, 0.12);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .navbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .navbar a:not(.get-started-btn):hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .navbar .get-started-btn {
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-btn);
+      margin-left: var(--space-xs);
+    }
+
+    .navbar .get-started-btn:hover {
+      background: #f8fbfa;
+      transform: translateY(-1px);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: var(--space-md) auto var(--space-lg);
+      padding: 0 8%;
+    }
+
+    .back-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: var(--space-md);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 22px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .back-button:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .back-button-outline {
+      background: var(--color-white);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .back-button-outline:hover {
+      background: #f0f5f3;
+    }
+
+    .page-intro {
+      background: linear-gradient(135deg, var(--color-hero) 0%, #f0ebe0 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .page-intro .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .page-intro h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .page-intro p {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+    }
+
+    .journal-card,
+    .tools-box {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      border: 1px solid rgba(11, 40, 58, 0.06);
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-md);
+    }
+
+    .journal-card label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: var(--color-text);
+    }
+
+    #journalInput {
+      width: 100%;
+      min-height: 160px;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      background: var(--color-input-bg);
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--color-text);
+      resize: vertical;
+      line-height: 1.6;
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    #journalInput:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(70, 120, 168, 0.15);
+      background: var(--color-white);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: var(--space-sm);
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .btn-secondary {
+      background: var(--color-hero);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      font-family: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .btn-secondary:hover {
+      background: #ece4cf;
+      transform: translateY(-2px);
+    }
+
+    .tools-box h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    .tools-box p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .entries-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .entries-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .entries-empty {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      font-style: italic;
+      padding: var(--space-md);
+      text-align: center;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      border: 1px dashed var(--color-border);
+    }
+
+    .entry {
+      background: var(--color-white);
+      margin-bottom: 12px;
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .entry-date {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    .entry-text {
+      color: var(--color-text);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .entry-delete {
+      margin-top: 10px;
+      background: transparent;
+      border: none;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+    }
+
+    .entry-delete:hover {
+      color: #c44;
+    }
+
+    .site-footer {
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .site-footer p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .site-footer p + p {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        justify-content: center;
+      }
+
+      .navbar .get-started-btn {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="MindHaven Logo" />
+      <h1>MindHaven</h1>
+    </div>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="get-started.html" class="get-started-btn">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="back-row">
+      <a href="features.html" class="back-button">← Features</a>
+      <a href="get-started.html" class="back-button back-button-outline">← Get Started</a>
+    </div>
+
+    <div class="page-intro">
+      <p class="label">Private Journal</p>
+      <h2>Your Private Journal</h2>
+      <p>Write your thoughts freely. Everything stays saved in your browser — only you can see it.</p>
+    </div>
+
+    <section class="journal-card" aria-label="Write a journal entry">
+      <label for="journalInput">Today's entry</label>
+      <textarea id="journalInput" placeholder="How are you feeling today? Write anything on your mind..."></textarea>
+      <div class="btn-row">
+        <button type="button" class="btn-primary" onclick="saveEntry()">Save Entry</button>
+      </div>
+    </section>
+
+    <section class="tools-box" aria-label="Journal tools">
+      <h3>Journal Tools</h3>
+      <p>Keep quick reminders, ideas, goals, and important notes together with your journal.</p>
+      <a href="sticky-note.html" class="btn-secondary">Open Sticky Notes</a>
+    </section>
+
+    <section aria-label="Saved entries">
+      <div class="entries-header">
+        <h3>Saved Entries</h3>
+      </div>
+      <div id="entries"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 MindHaven. All rights reserved.</p>
+    <p>Promoting Good Health and Well-being (SDG 3)</p>
+  </footer>
+
+  <script>
+    function formatDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleString(undefined, {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    }
+
+    function saveEntry() {
+      const input = document.getElementById("journalInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      const entries = JSON.parse(localStorage.getItem("journal") || "[]");
+      entries.unshift({ text: text, date: new Date().toISOString() });
+      localStorage.setItem("journal", JSON.stringify(entries));
+      input.value = "";
+      loadEntries();
+    }
+
+    function deleteEntry(index) {
+      const entries = JSON.parse(localStorage.getItem("journal") || "[]");
+      entries.splice(index, 1);
+      localStorage.setItem("journal", JSON.stringify(entries));
+      loadEntries();
+    }
+
+    function loadEntries() {
+      const raw = JSON.parse(localStorage.getItem("journal") || "[]");
+      const container = document.getElementById("entries");
+      container.innerHTML = "";
+
+      if (raw.length === 0) {
+        container.innerHTML =
+          '<p class="entries-empty">No entries yet. Write something above and click Save Entry.</p>';
+        return;
+      }
+
+      raw.forEach(function (item, index) {
+        const text = typeof item === "string" ? item : item.text;
+        const date =
+          typeof item === "object" && item.date
+            ? item.date
+            : new Date().toISOString();
+
+        const div = document.createElement("div");
+        div.className = "entry";
+
+        const dateEl = document.createElement("div");
+        dateEl.className = "entry-date";
+        dateEl.textContent = formatDate(date);
+
+        const textEl = document.createElement("div");
+        textEl.className = "entry-text";
+        textEl.textContent = text;
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "entry-delete";
+        delBtn.textContent = "Delete entry";
+        delBtn.onclick = function () {
+          deleteEntry(index);
+        };
+
+        div.appendChild(dateEl);
+        div.appendChild(textEl);
+        div.appendChild(delBtn);
+        container.appendChild(div);
+      });
+    }
+
+    loadEntries();
+  </script>
+
+</body>
+</html>

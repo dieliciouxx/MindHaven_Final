@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindHaven | Sticky Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #4678a8;
+      --color-primary-dark: #3a628a;
+      --color-bg: #f5faf8;
+      --color-hero: #f7f2e5;
+      --color-text: #0b283a;
+      --color-text-muted: #3d5a6e;
+      --color-white: #ffffff;
+      --color-border: #d8e4df;
+      --color-input-bg: #f9fcfa;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 4px 20px rgba(11, 40, 58, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 40, 58, 0.06);
+      --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s var(--ease-out);
+      --transition-smooth: 0.3s var(--ease-out);
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --max-width: 1200px;
+      --header-padding: 18px 8%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 340px;
+      height: 340px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(110, 180, 120, 0.14) 0%, transparent 72%);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(70, 120, 168, 0.12) 0%, transparent 72%);
+    }
+
+    html::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      top: 35%;
+      right: -160px;
+      background: radial-gradient(circle, rgba(220, 235, 230, 0.45) 0%, transparent 70%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .site-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--header-padding);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(11, 40, 58, 0.12);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .navbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      transition: background-color var(--transition-fast);
+    }
+
+    .navbar a:not(.get-started-btn):hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .navbar .get-started-btn {
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-btn);
+      margin-left: var(--space-xs);
+    }
+
+    .navbar .get-started-btn:hover {
+      background: #f8fbfa;
+      transform: translateY(-1px);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: var(--space-md) auto var(--space-lg);
+      padding: 0 8%;
+    }
+
+    .back-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: var(--space-md);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 22px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .back-button:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .back-button-journal {
+      background: var(--color-hero);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .back-button-journal:hover {
+      background: #ece4cf;
+    }
+
+    .page-intro {
+      background: linear-gradient(135deg, var(--color-hero) 0%, #f0ebe0 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .page-intro .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .page-intro h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .page-intro p {
+      color: var(--color-text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .note-creator {
+      background: var(--color-white);
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.06);
+      margin-bottom: var(--space-lg);
+    }
+
+    .note-creator h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+    }
+
+    .input-group {
+      margin-bottom: var(--space-sm);
+    }
+
+    .input-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+
+    .input-group textarea,
+    .input-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: var(--color-input-bg);
+      color: var(--color-text);
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .input-group textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .input-group textarea:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(70, 120, 168, 0.15);
+      background: var(--color-white);
+    }
+
+    .add-btn {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      font-family: inherit;
+      margin-top: var(--space-xs);
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .add-btn:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .notes-section h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+
+    .notes-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .notes-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--color-text-muted);
+      font-style: italic;
+      padding: var(--space-lg);
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      border: 1px dashed var(--color-border);
+    }
+
+    .note {
+      min-height: 200px;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      position: relative;
+      box-shadow: 0 6px 18px rgba(11, 40, 58, 0.12);
+      transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+      border: 1px solid rgba(11, 40, 58, 0.06);
+    }
+
+    .note:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(11, 40, 58, 0.15);
+    }
+
+    .note-emoji {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    .note-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      padding-right: 24px;
+      color: var(--color-text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .note-sticker {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      color: #c0392b;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--transition-fast);
+    }
+
+    .delete-btn:hover {
+      background: var(--color-white);
+    }
+
+    .site-footer {
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .site-footer p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .site-footer p + p {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        justify-content: center;
+      }
+
+      .navbar .get-started-btn {
+        margin-left: 0;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="MindHaven Logo" />
+      <h1>MindHaven</h1>
+    </div>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="get-started.html" class="get-started-btn">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="back-row">
+      <a href="private-journal.html" class="back-button back-button-journal">← Private Journal</a>
+      <a href="features.html" class="back-button">← Features</a>
+    </div>
+
+    <div class="page-intro">
+      <p class="label">Journal Tools</p>
+      <h2>Sticky Notes</h2>
+      <p>Create colorful notes with emojis and stickers. Saved privately in your browser.</p>
+    </div>
+
+    <section class="note-creator" aria-label="Create a sticky note">
+      <h3>Create a note</h3>
+      <div class="form-grid">
+        <div class="input-group full">
+          <label for="noteInput">Your note</label>
+          <textarea id="noteInput" placeholder="Write something inspiring, a reminder, or a goal..."></textarea>
+        </div>
+        <div class="input-group">
+          <label for="noteColor">Color</label>
+          <select id="noteColor">
+            <option value="#FFF3B0">Yellow</option>
+            <option value="#FFD6E7">Pink</option>
+            <option value="#D6F5D6">Green</option>
+            <option value="#D6EAFF">Blue</option>
+            <option value="#F7D9B1">Peach</option>
+            <option value="#E6D6FF">Lavender</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="noteEmoji">Emoji</label>
+          <select id="noteEmoji">
+            <option value="😊">Happy</option>
+            <option value="🌸">Flower</option>
+            <option value="💖">Love</option>
+            <option value="🌿">Wellness</option>
+            <option value="⭐">Star</option>
+            <option value="🦋">Butterfly</option>
+            <option value="☀️">Sunshine</option>
+            <option value="🌙">Moon</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="noteSticker">Sticker</label>
+          <select id="noteSticker">
+            <option value="🌼">Daisy</option>
+            <option value="🎀">Ribbon</option>
+            <option value="☁️">Cloud</option>
+            <option value="🌈">Rainbow</option>
+            <option value="✨">Sparkles</option>
+            <option value="🐻">Bear</option>
+            <option value="🌻">Sunflower</option>
+            <option value="🧸">Teddy</option>
+          </select>
+        </div>
+      </div>
+      <button type="button" class="add-btn" onclick="addNote()">Add Sticky Note</button>
+    </section>
+
+    <section class="notes-section" aria-label="Your sticky notes">
+      <h3>Your notes</h3>
+      <div id="notesContainer" class="notes-container"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 MindHaven. All rights reserved.</p>
+    <p>Promoting Good Health and Well-being (SDG 3)</p>
+  </footer>
+
+  <script>
+    function getNotes() {
+      return JSON.parse(localStorage.getItem("mindhavenNotes") || "[]");
+    }
+
+    function setNotes(notes) {
+      localStorage.setItem("mindhavenNotes", JSON.stringify(notes));
+    }
+
+    function addNote() {
+      const text = document.getElementById("noteInput").value.trim();
+      if (!text) {
+        alert("Please write a note first.");
+        return;
+      }
+
+      const notes = getNotes();
+      notes.unshift({
+        text: text,
+        color: document.getElementById("noteColor").value,
+        emoji: document.getElementById("noteEmoji").value,
+        sticker: document.getElementById("noteSticker").value,
+      });
+      setNotes(notes);
+      document.getElementById("noteInput").value = "";
+      loadNotes();
+    }
+
+    function deleteNote(index) {
+      const notes = getNotes();
+      notes.splice(index, 1);
+      setNotes(notes);
+      loadNotes();
+    }
+
+    function loadNotes() {
+      const notes = getNotes();
+      const container = document.getElementById("notesContainer");
+      container.innerHTML = "";
+
+      if (notes.length === 0) {
+        container.innerHTML =
+          '<p class="notes-empty">No sticky notes yet. Create one above!</p>';
+        return;
+      }
+
+      notes.forEach(function (note, index) {
+        const div = document.createElement("div");
+        div.className = "note";
+        div.style.backgroundColor = note.color || "#FFF3B0";
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "delete-btn";
+        delBtn.setAttribute("aria-label", "Delete note");
+        delBtn.textContent = "✕";
+        delBtn.onclick = function () {
+          deleteNote(index);
+        };
+
+        const emojiEl = document.createElement("div");
+        emojiEl.className = "note-emoji";
+        emojiEl.textContent = note.emoji || "📝";
+
+        const textEl = document.createElement("div");
+        textEl.className = "note-text";
+        textEl.textContent = note.text || "";
+
+        const stickerEl = document.createElement("div");
+        stickerEl.className = "note-sticker";
+        stickerEl.textContent = note.sticker || "✨";
+
+        div.appendChild(delBtn);
+        div.appendChild(emojiEl);
+        div.appendChild(textEl);
+        div.appendChild(stickerEl);
+        container.appendChild(div);
+      });
+    }
+
+    loadNotes();
+  </script>
+
+</body>
+</html>

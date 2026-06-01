@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindHaven | Learn More</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #4678a8;
+      --color-primary-dark: #3a628a;
+      --color-bg: #f5faf8;
+      --color-hero: #f7f2e5;
+      --color-text: #0b283a;
+      --color-text-muted: #3d5a6e;
+      --color-white: #ffffff;
+      --color-accent-soft: #dcebe6;
+      --color-quote: #5a8fb8;
+      --color-border: #d8e4df;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 4px 20px rgba(11, 40, 58, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 40, 58, 0.06);
+      --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s var(--ease-out);
+      --transition-smooth: 0.3s var(--ease-out);
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 60px;
+      --max-width: 1200px;
+      --header-padding: 18px 8%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* PAGE BACKGROUND */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 340px;
+      height: 340px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(110, 180, 120, 0.14) 0%, transparent 72%);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(70, 120, 168, 0.12) 0%, transparent 72%);
+    }
+
+    html::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      top: 35%;
+      right: -160px;
+      background: radial-gradient(circle, rgba(220, 235, 230, 0.45) 0%, transparent 70%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--header-padding);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(11, 40, 58, 0.12);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .navbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .navbar a:not(.get-started-btn):hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .navbar .get-started-btn {
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-btn);
+      margin-left: var(--space-xs);
+    }
+
+    .navbar .get-started-btn:hover {
+      background: #f8fbfa;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    /* MAIN */
+    main {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: var(--space-md) auto var(--space-lg);
+      padding: 0 8%;
+    }
+
+    .back-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: var(--space-md);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .back-button:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .back-button-outline {
+      background: var(--color-white);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .back-button-outline:hover {
+      background: #f0f5f3;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--color-hero) 0%, #f0ebe0 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl) var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mini-title {
+      color: var(--color-primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-text h1 {
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .hero-text h1 span {
+      color: var(--color-primary);
+    }
+
+    .hero-text > p {
+      max-width: 560px;
+      color: var(--color-text-muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      filter: drop-shadow(0 12px 28px rgba(11, 40, 58, 0.12));
+    }
+
+    /* CONTENT */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: var(--space-md);
+      align-items: start;
+    }
+
+    .info-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.05);
+    }
+
+    .info-card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-sm);
+      letter-spacing: -0.02em;
+    }
+
+    .info-card p {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: var(--space-sm);
+    }
+
+    .info-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .verse-card {
+      background: linear-gradient(145deg, var(--color-accent-soft) 0%, #e8f2fa 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--color-border);
+    }
+
+    .verse-card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-sm);
+      letter-spacing: -0.02em;
+    }
+
+    .bible-verse {
+      color: var(--color-quote);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: var(--space-sm);
+    }
+
+    .verse-ref {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      font-style: normal;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: var(--space-lg);
+    }
+
+    .btn {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: 14px 24px;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .btn:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .btn-secondary {
+      background: var(--color-white);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background: #f0f5f3;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .site-footer p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .site-footer p + p {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      opacity: 0.85;
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        justify-content: center;
+      }
+
+      .navbar .get-started-btn {
+        margin-left: 0;
+      }
+
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .hero-text > p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-row {
+        justify-content: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="MindHaven Logo" />
+      <h1>MindHaven</h1>
+    </div>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="get-started.html" class="get-started-btn">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="back-row">
+      <a href="index.html" class="back-button">← Home</a>
+      <a href="features.html" class="back-button back-button-outline">← Features</a>
+    </div>
+
+    <section class="hero">
+      <div class="hero-text">
+        <p class="mini-title">Learn More</p>
+        <h1>Discover How <span>MindHaven</span> Supports Your Mental Wellness</h1>
+        <p>
+          MindHaven is designed to help students and individuals improve their
+          mental well-being through helpful tools, motivational support, and
+          wellness resources.
+        </p>
+      </div>
+      <div class="hero-image">
+        <img src="image.jpg.png" alt="Person relaxing in a cozy self-care setting" />
+      </div>
+    </section>
+
+    <section class="content-grid" aria-label="About MindHaven">
+      <article class="info-card">
+        <h2>Our Purpose</h2>
+        <p>
+          MindHaven is a safe and supportive platform designed to help students
+          and individuals improve their mental well-being through simple and
+          meaningful tools. Our goal is to create a space where people can express
+          their emotions, manage stress, and feel supported in their daily lives.
+        </p>
+        <p>
+          Through features like mood tracking, private journaling, daily motivation,
+          and wellness guides, MindHaven encourages self-care, emotional awareness,
+          and personal growth. We believe that mental health is just as important as
+          physical health, and everyone deserves a place where they can feel heard,
+          understood, and valued.
+        </p>
+        <div class="cta-row">
+          <a href="index.html" class="btn btn-secondary">Home</a>
+          <a href="features.html" class="btn btn-secondary">Features</a>
+          <a href="get-started.html" class="btn">Get Started</a>
+        </div>
+      </article>
+
+      <aside class="verse-card" aria-label="Inspirational verse">
+        <h2>Words of Comfort</h2>
+        <blockquote class="bible-verse">
+          “Do not be anxious about anything, but in every situation, by prayer and
+          petition, with thanksgiving, present your requests to God. And the peace
+          of God… will guard your hearts and your minds.”
+        </blockquote>
+        <p class="verse-ref">— Philippians 4:6–7</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 MindHaven. All rights reserved.</p>
+    <p>Promoting Good Health and Well-being (SDG 3)</p>
+  </footer>
+
+</body>
+</html>

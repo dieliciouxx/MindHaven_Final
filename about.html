@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindHaven | About Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #4678a8;
+      --color-primary-dark: #3a628a;
+      --color-bg: #f5faf8;
+      --color-hero: #f7f2e5;
+      --color-text: #0b283a;
+      --color-text-muted: #3d5a6e;
+      --color-white: #ffffff;
+      --color-accent-soft: #dcebe6;
+      --color-accent-blue: #dce8f0;
+      --color-quote-bg: #e8f4f2;
+      --color-border: #d8e4df;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 4px 20px rgba(11, 40, 58, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 40, 58, 0.06);
+      --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s var(--ease-out);
+      --transition-smooth: 0.3s var(--ease-out);
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 60px;
+      --max-width: 1200px;
+      --header-padding: 18px 8%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* PAGE BACKGROUND */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 340px;
+      height: 340px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(110, 180, 120, 0.14) 0%, transparent 72%);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(70, 120, 168, 0.12) 0%, transparent 72%);
+    }
+
+    html::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      top: 35%;
+      right: -160px;
+      background: radial-gradient(circle, rgba(220, 235, 230, 0.45) 0%, transparent 70%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--header-padding);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(11, 40, 58, 0.12);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .navbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .navbar a:not(.get-started-btn).active,
+    .navbar a:not(.get-started-btn):hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .navbar .get-started-btn {
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-btn);
+      margin-left: var(--space-xs);
+    }
+
+    .navbar .get-started-btn:hover {
+      background: #f8fbfa;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    /* MAIN */
+    main {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: var(--space-md) auto var(--space-lg);
+      padding: 0 8%;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--color-hero) 0%, #f0ebe0 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl) var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-text .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero-text h2 {
+      font-size: clamp(1.85rem, 4vw, 2.75rem);
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      max-width: 520px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-quote {
+      background: rgba(255, 255, 255, 0.7);
+      border-left: 4px solid var(--color-primary);
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      margin-top: var(--space-sm);
+      max-width: 420px;
+      font-style: italic;
+      color: var(--color-text);
+      font-size: 1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-image {
+      flex: 1.15;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      filter: drop-shadow(0 12px 28px rgba(11, 40, 58, 0.12));
+      transition: transform var(--transition-smooth);
+    }
+
+    .hero-image img:hover {
+      transform: scale(1.02);
+    }
+
+    /* INFO GRID */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .info-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-card);
+      text-align: center;
+      border: 1px solid rgba(11, 40, 58, 0.05);
+      transition:
+        transform var(--transition-smooth),
+        box-shadow var(--transition-smooth);
+    }
+
+    .info-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(11, 40, 58, 0.1);
+    }
+
+    .info-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--color-accent-soft);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 2rem;
+      transition: transform var(--transition-smooth);
+    }
+
+    .info-card:hover .info-icon {
+      transform: scale(1.05);
+    }
+
+    .info-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+    }
+
+    .info-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .info-card ul {
+      list-style: none;
+      text-align: left;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+
+    .info-card ul li {
+      margin: 8px 0;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      padding-left: 4px;
+    }
+
+    .info-card ul li::before {
+      content: "•";
+      color: var(--color-primary);
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    /* STORY */
+    .story-section {
+      display: flex;
+      gap: var(--space-lg);
+      align-items: center;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-xl);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.05);
+    }
+
+    .story-brand {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+      background: linear-gradient(145deg, var(--color-accent-soft) 0%, var(--color-accent-blue) 100%);
+      border-radius: var(--radius-md);
+      min-width: 200px;
+    }
+
+    .story-brand img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: var(--space-sm);
+      filter: drop-shadow(0 4px 12px rgba(11, 40, 58, 0.1));
+    }
+
+    .story-brand span {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .story-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .story-text h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+    }
+
+    .story-text p {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+      margin-bottom: var(--space-sm);
+      line-height: 1.6;
+    }
+
+    .story-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .story-text strong {
+      color: var(--color-text);
+    }
+
+    /* QUOTE */
+    .quote-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .quote-box {
+      background: var(--color-quote-bg);
+      border-radius: var(--radius-md);
+      padding: var(--space-md) var(--space-lg);
+      max-width: 480px;
+      text-align: center;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quote-box p {
+      font-size: 1.05rem;
+      color: var(--color-text);
+      line-height: 1.7;
+    }
+
+    .quote-box strong {
+      display: block;
+      margin: 6px 0;
+      font-weight: 700;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .site-footer p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .site-footer p + p {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      opacity: 0.85;
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        justify-content: center;
+      }
+
+      .navbar .get-started-btn {
+        margin-left: 0;
+      }
+
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .hero-text p,
+      .hero-quote {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .story-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .story-brand {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .hero-image img:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="MindHaven Logo" />
+      <h1>MindHaven</h1>
+    </div>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="get-started.html" class="get-started-btn">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-text">
+        <p class="label">About Us</p>
+        <h2>About MindHaven</h2>
+        <p>
+          MindHaven is a web-based mental wellness platform designed to support
+          students and young adults in managing stress, expressing emotions, and
+          improving their overall well-being.
+        </p>
+        <p>
+          We provide a safe, anonymous, and supportive space where everyone can
+          feel heard, find inspiration, and access helpful resources anytime,
+          anywhere.
+        </p>
+        <blockquote class="hero-quote">
+          “You don’t have to face it alone. We’re here for you.”
+        </blockquote>
+      </div>
+      <div class="hero-image">
+        <img src="image.jpg.png" alt="Person relaxing with a warm drink, surrounded by plants and self-care items" />
+      </div>
+    </section>
+
+    <section aria-label="Mission, vision, and values">
+      <div class="info-grid">
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">🎯</div>
+          <h3>Our Mission</h3>
+          <p>
+            To promote mental wellness by providing accessible tools, resources,
+            and a community that empowers individuals to live healthier and more
+            balanced lives.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">👁️</div>
+          <h3>Our Vision</h3>
+          <p>
+            A world where mental health is prioritized, talked about openly, and
+            support is available to everyone, everywhere.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">🤝</div>
+          <h3>Our Values</h3>
+          <ul>
+            <li>Compassion</li>
+            <li>Privacy &amp; Safety</li>
+            <li>Inclusion</li>
+            <li>Empowerment</li>
+            <li>Reliability</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="story-section" aria-label="Our story">
+      <div class="story-brand">
+        <img src="logo.png" alt="MindHaven logo" />
+        <span>MindHaven</span>
+      </div>
+      <div class="story-text">
+        <h2>Our Story</h2>
+        <p>
+          MindHaven was created with a simple belief:
+          <strong>everyone deserves a safe space to be heard and supported.</strong>
+        </p>
+        <p>
+          We understand that life can be challenging, and sometimes talking to
+          someone you trust isn’t easy. That’s why we built MindHaven — an
+          anonymous and supportive platform where you can express yourself, find
+          guidance, and take small steps toward a healthier mind.
+        </p>
+      </div>
+    </section>
+
+    <div class="quote-wrap">
+      <div class="quote-box">
+        <p>
+          <strong>You matter.</strong>
+          <strong>Your feelings are valid.</strong>
+          <strong>Your mind deserves care.</strong>
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 MindHaven. All rights reserved.</p>
+    <p>Promoting Good Health and Well-being (SDG 3)</p>
+  </footer>
+
+</body>
+</html>

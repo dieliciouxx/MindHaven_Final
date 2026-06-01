@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindHaven | Mood Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #4678a8;
+      --color-primary-dark: #3a628a;
+      --color-bg: #f5faf8;
+      --color-hero: #f7f2e5;
+      --color-text: #0b283a;
+      --color-text-muted: #3d5a6e;
+      --color-white: #ffffff;
+      --color-accent-soft: #e3f0ff;
+      --color-border: #d8e4df;
+      --color-input-bg: #f9fcfa;
+      --color-danger: #e74c3c;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 4px 20px rgba(11, 40, 58, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 40, 58, 0.06);
+      --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s var(--ease-out);
+      --transition-smooth: 0.3s var(--ease-out);
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --max-width: 900px;
+      --header-padding: 18px 8%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 340px;
+      height: 340px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(110, 180, 120, 0.14) 0%, transparent 72%);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(70, 120, 168, 0.12) 0%, transparent 72%);
+    }
+
+    html::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      top: 35%;
+      right: -160px;
+      background: radial-gradient(circle, rgba(220, 235, 230, 0.45) 0%, transparent 70%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .site-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--header-padding);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(11, 40, 58, 0.12);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .navbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      transition: background-color var(--transition-fast);
+    }
+
+    .navbar a:not(.get-started-btn):hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .navbar .get-started-btn {
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-btn);
+      margin-left: var(--space-xs);
+    }
+
+    .navbar .get-started-btn:hover {
+      background: #f8fbfa;
+      transform: translateY(-1px);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: var(--space-md) auto var(--space-lg);
+      padding: 0 8%;
+    }
+
+    .back-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: var(--space-md);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 22px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .back-button:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .back-button-outline {
+      background: var(--color-white);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .back-button-outline:hover {
+      background: #f0f5f3;
+    }
+
+    .page-intro {
+      background: linear-gradient(135deg, var(--color-hero) 0%, #f0ebe0 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .page-intro .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .page-intro h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .page-intro p {
+      color: var(--color-text-muted);
+    }
+
+    .card {
+      background: var(--color-white);
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.06);
+      margin-bottom: var(--space-md);
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      text-align: center;
+    }
+
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 12px;
+    }
+
+    .mood-option {
+      padding: 16px 10px;
+      background: var(--color-input-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mood-option:hover {
+      transform: scale(1.04);
+      border-color: var(--color-primary);
+    }
+
+    .mood-option.selected {
+      border-color: var(--color-primary);
+      background: var(--color-accent-soft);
+      transform: scale(1.03);
+      box-shadow: 0 4px 16px rgba(70, 120, 168, 0.2);
+    }
+
+    .mood-option .emoji {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .mood-option .label {
+      font-weight: 600;
+      color: var(--color-text);
+      font-size: 0.9rem;
+    }
+
+    #note {
+      width: 100%;
+      min-height: 110px;
+      padding: 14px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 1rem;
+      background: var(--color-input-bg);
+      color: var(--color-text);
+      resize: vertical;
+      margin-bottom: var(--space-sm);
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    #note:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(70, 120, 168, 0.15);
+      background: var(--color-white);
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    #log-btn {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: inherit;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    #log-btn:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .history-header h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-align: left;
+      margin: 0;
+    }
+
+    .clear-btn {
+      background: var(--color-danger);
+      color: var(--color-white);
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .clear-btn:hover {
+      background: #c0392b;
+      transform: translateY(-1px);
+    }
+
+    .history-empty {
+      color: var(--color-text-muted);
+      text-align: center;
+      padding: var(--space-md);
+      font-style: italic;
+    }
+
+    .entry {
+      background: var(--color-input-bg);
+      padding: var(--space-sm);
+      margin-bottom: 12px;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-primary);
+      position: relative;
+    }
+
+    .entry-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .entry-mood {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .entry-date {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-bottom: 6px;
+    }
+
+    .entry-note {
+      font-size: 0.95rem;
+      color: var(--color-text);
+      line-height: 1.55;
+    }
+
+    .delete-btn {
+      background: transparent;
+      border: none;
+      color: var(--color-danger);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 4px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .delete-btn:hover {
+      opacity: 0.75;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 40, 58, 0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal.is-open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--color-white);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      box-shadow: 0 16px 48px rgba(11, 40, 58, 0.25);
+      max-width: 380px;
+      width: 100%;
+      animation: pop 0.35s var(--ease-out);
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.85);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-emoji {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--color-text);
+    }
+
+    .modal-text {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+    }
+
+    .modal-btn {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+
+    .modal-btn:hover {
+      background: var(--color-primary-dark);
+    }
+
+    .site-footer {
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .site-footer p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .site-footer p + p {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        justify-content: center;
+      }
+
+      .navbar .get-started-btn {
+        margin-left: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modal-content {
+        animation: none;
+      }
+
+      .mood-option:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="MindHaven Logo" />
+      <h1>MindHaven</h1>
+    </div>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="get-started.html" class="get-started-btn">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="back-row">
+      <a href="features.html" class="back-button">← Features</a>
+      <a href="get-started.html" class="back-button back-button-outline">← Get Started</a>
+    </div>
+
+    <div class="page-intro">
+      <p class="label">Mood Tracker</p>
+      <h2>How are you feeling?</h2>
+      <p>Track your emotions and reflect on your day. Everything stays private in your browser.</p>
+    </div>
+
+    <section class="card mood-selector" aria-label="Select your mood">
+      <h3>How are you feeling today?</h3>
+      <div id="mood-grid" class="mood-grid"></div>
+    </section>
+
+    <section class="card note-section" aria-label="Add a note">
+      <h3>Add a note (optional)</h3>
+      <textarea id="note" placeholder="What made you feel this way?"></textarea>
+      <div class="btn-row">
+        <button type="button" id="log-btn">Log Mood</button>
+      </div>
+    </section>
+
+    <section class="card history" aria-label="Mood history">
+      <div class="history-header">
+        <h3>Your Mood History</h3>
+        <button type="button" class="clear-btn" onclick="clearHistory()">Clear All</button>
+      </div>
+      <div id="history-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 MindHaven. All rights reserved.</p>
+    <p>Promoting Good Health and Well-being (SDG 3)</p>
+  </footer>
+
+  <div id="customModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <div id="modalEmoji" class="modal-emoji" aria-hidden="true"></div>
+      <div id="modalTitle" class="modal-title"></div>
+      <div id="modalText" class="modal-text"></div>
+      <button type="button" class="modal-btn" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+
+  <script>
+    const moods = [
+      { emoji: "😄", label: "Great" },
+      { emoji: "🙂", label: "Good" },
+      { emoji: "😐", label: "Okay" },
+      { emoji: "🙁", label: "Bad" },
+      { emoji: "😢", label: "Terrible" },
+      { emoji: "😡", label: "Angry" },
+      { emoji: "😌", label: "Calm" },
+      { emoji: "🤩", label: "Excited" },
+      { emoji: "😴", label: "Tired" },
+      { emoji: "🥰", label: "Loved" },
+      { emoji: "😓", label: "Stressed" },
+      { emoji: "🌟", label: "Hopeful" },
+    ];
+
+    let selectedMood = null;
+
+    function getHistory() {
+      return JSON.parse(localStorage.getItem("moodHistory") || "[]");
+    }
+
+    function setHistory(history) {
+      localStorage.setItem("moodHistory", JSON.stringify(history));
+    }
+
+    function renderMoods() {
+      const container = document.getElementById("mood-grid");
+      container.innerHTML = "";
+
+      moods.forEach(function (mood) {
+        const div = document.createElement("button");
+        div.type = "button";
+        div.className = "mood-option";
+        div.setAttribute("aria-label", mood.label);
+
+        const emojiEl = document.createElement("span");
+        emojiEl.className = "emoji";
+        emojiEl.textContent = mood.emoji;
+
+        const labelEl = document.createElement("span");
+        labelEl.className = "label";
+        labelEl.textContent = mood.label;
+
+        div.appendChild(emojiEl);
+        div.appendChild(labelEl);
+
+        div.onclick = function () {
+          document.querySelectorAll(".mood-option").forEach(function (opt) {
+            opt.classList.remove("selected");
+          });
+          div.classList.add("selected");
+          selectedMood = mood;
+        };
+
+        container.appendChild(div);
+      });
+    }
+
+    function showModal(emoji, title, text) {
+      document.getElementById("modalEmoji").textContent = emoji;
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalText").textContent = text;
+      document.getElementById("customModal").classList.add("is-open");
+    }
+
+    function closeModal() {
+      document.getElementById("customModal").classList.remove("is-open");
+    }
+
+    document.getElementById("log-btn").onclick = function () {
+      if (!selectedMood) {
+        showModal("😊", "Oops!", "Please select a mood first.");
+        return;
+      }
+
+      const noteText = document.getElementById("note").value.trim();
+      const entry = {
+        emoji: selectedMood.emoji,
+        label: selectedMood.label,
+        note: noteText || "No note added",
+        date: new Date().toLocaleString(),
+      };
+
+      const history = getHistory();
+      history.unshift(entry);
+      setHistory(history);
+
+      document.getElementById("note").value = "";
+      selectedMood = null;
+      document.querySelectorAll(".mood-option").forEach(function (opt) {
+        opt.classList.remove("selected");
+      });
+
+      renderHistory();
+      showModal("🎉", "Mood logged!", entry.emoji + " " + entry.label);
+    };
+
+    function renderHistory() {
+      const list = document.getElementById("history-list");
+      const history = getHistory();
+
+      list.innerHTML = "";
+
+      if (history.length === 0) {
+        list.innerHTML =
+          '<p class="history-empty">No mood entries yet. Select a mood above and click Log Mood.</p>';
+        return;
+      }
+
+      history.forEach(function (entry, index) {
+        const div = document.createElement("div");
+        div.className = "entry";
+
+        const top = document.createElement("div");
+        top.className = "entry-top";
+
+        const moodEl = document.createElement("span");
+        moodEl.className = "entry-mood";
+        moodEl.textContent = entry.emoji + " " + entry.label;
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "delete-btn";
+        delBtn.setAttribute("aria-label", "Delete entry");
+        delBtn.textContent = "✕";
+        delBtn.onclick = function () {
+          deleteEntry(index);
+        };
+
+        top.appendChild(moodEl);
+        top.appendChild(delBtn);
+
+        const dateEl = document.createElement("div");
+        dateEl.className = "entry-date";
+        dateEl.textContent = entry.date;
+
+        const noteEl = document.createElement("div");
+        noteEl.className = "entry-note";
+        noteEl.textContent = entry.note;
+
+        div.appendChild(top);
+        div.appendChild(dateEl);
+        div.appendChild(noteEl);
+        list.appendChild(div);
+      });
+    }
+
+    window.deleteEntry = function (index) {
+      const history = getHistory();
+      history.splice(index, 1);
+      setHistory(history);
+      renderHistory();
+    };
+
+    window.clearHistory = function () {
+      if (confirm("Are you sure you want to clear all mood history?")) {
+        localStorage.removeItem("moodHistory");
+        renderHistory();
+      }
+    };
+
+    document.getElementById("customModal").addEventListener("click", function (e) {
+      if (e.target === this) closeModal();
+    });
+
+    renderMoods();
+    renderHistory();
+  </script>
+
+</body>
+</html>

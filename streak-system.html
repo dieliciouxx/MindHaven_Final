@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindHaven | Wellness Streak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #4678a8;
+      --color-primary-dark: #3a628a;
+      --color-bg: #f5faf8;
+      --color-hero: #f7f2e5;
+      --color-text: #0b283a;
+      --color-text-muted: #3d5a6e;
+      --color-white: #ffffff;
+      --color-accent-soft: #dcebe6;
+      --color-accent-warm: #fff4e6;
+      --color-border: #d8e4df;
+      --color-success: #2d8a5e;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 4px 20px rgba(11, 40, 58, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 40, 58, 0.06);
+      --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s var(--ease-out);
+      --transition-smooth: 0.3s var(--ease-out);
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --max-width: 720px;
+      --header-padding: 18px 8%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 340px;
+      height: 340px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(110, 180, 120, 0.14) 0%, transparent 72%);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(70, 120, 168, 0.12) 0%, transparent 72%);
+    }
+
+    html::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      top: 35%;
+      right: -160px;
+      background: radial-gradient(circle, rgba(220, 235, 230, 0.45) 0%, transparent 70%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .site-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--header-padding);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(11, 40, 58, 0.12);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .navbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      transition: background-color var(--transition-fast);
+    }
+
+    .navbar a:not(.get-started-btn):hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .navbar .get-started-btn {
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-btn);
+      margin-left: var(--space-xs);
+    }
+
+    .navbar .get-started-btn:hover {
+      background: #f8fbfa;
+      transform: translateY(-1px);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: var(--space-md) auto var(--space-lg);
+      padding: 0 8%;
+    }
+
+    .back-row {
+      margin-bottom: var(--space-md);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 22px;
+      background: var(--color-primary);
+      color: var(--color-white);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .back-button:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .page-intro {
+      background: linear-gradient(135deg, var(--color-hero) 0%, #f0ebe0 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .page-intro .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .page-intro h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .page-intro p {
+      color: var(--color-text-muted);
+      font-size: 0.98rem;
+    }
+
+    .status-banner {
+      display: none;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.92rem;
+      text-align: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .status-banner.is-visible {
+      display: block;
+    }
+
+    .status-banner.success {
+      background: #e8f5ee;
+      color: var(--color-success);
+      border: 1px solid #b8dfc9;
+    }
+
+    .status-banner.info {
+      background: var(--color-accent-soft);
+      color: var(--color-primary-dark);
+      border: 1px solid var(--color-border);
+    }
+
+    .streak-display {
+      background: linear-gradient(145deg, var(--color-white) 0%, var(--color-accent-warm) 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg) var(--space-md);
+      text-align: center;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.06);
+      margin-bottom: var(--space-md);
+    }
+
+    .streak-flame {
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .streak-count {
+      font-size: clamp(3rem, 10vw, 4.5rem);
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .streak-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: var(--space-md);
+    }
+
+    .stat-box {
+      background: var(--color-white);
+      border: 1px solid rgba(11, 40, 58, 0.06);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm);
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-box .value {
+      display: block;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1.2;
+    }
+
+    .stat-box .name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--color-white);
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.06);
+      margin-bottom: var(--space-md);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      text-align: center;
+    }
+
+    .checkin-btn {
+      width: 100%;
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 16px 24px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: inherit;
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .checkin-btn:hover:not(:disabled) {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    .checkin-btn:disabled {
+      background: var(--color-accent-soft);
+      color: var(--color-success);
+      cursor: default;
+      border: 1px solid #b8dfc9;
+    }
+
+    .checkin-hint {
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      margin-top: 12px;
+    }
+
+    .week-track {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .day-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .day-cell .dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #eef4f1;
+      border: 2px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .day-cell.done .dot {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    .day-cell.today .dot {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(70, 120, 168, 0.2);
+    }
+
+    .day-cell .day-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .tips-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tips-list li {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      padding-left: 1.4rem;
+      position: relative;
+    }
+
+    .tips-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .reset-row {
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .reset-btn {
+      background: none;
+      border: none;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 8px;
+    }
+
+    .reset-btn:hover {
+      color: var(--color-primary);
+    }
+
+    .site-footer {
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .site-footer p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .site-footer p + p {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        justify-content: center;
+      }
+
+      .navbar .get-started-btn {
+        margin-left: 0;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .day-cell .dot {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="MindHaven Logo" />
+      <h1>MindHaven</h1>
+    </div>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="get-started.html" class="get-started-btn">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="back-row">
+      <a href="features.html" class="back-button">← Back to Features</a>
+    </div>
+
+    <div class="page-intro">
+      <p class="label">Wellness Streak</p>
+      <h2>Keep showing up for yourself</h2>
+      <p>Check in once a day to build a streak. Small, consistent steps make a real difference.</p>
+    </div>
+
+    <p id="status-banner" class="status-banner" role="status" aria-live="polite"></p>
+
+    <section class="streak-display" aria-label="Current streak">
+      <div class="streak-flame" aria-hidden="true">🔥</div>
+      <p class="streak-count" id="streak-count">0</p>
+      <p class="streak-label" id="streak-label">day streak</p>
+    </section>
+
+    <div class="stats-row" aria-label="Streak statistics">
+      <div class="stat-box">
+        <span class="value" id="stat-current">0</span>
+        <span class="name">Current</span>
+      </div>
+      <div class="stat-box">
+        <span class="value" id="stat-longest">0</span>
+        <span class="name">Longest</span>
+      </div>
+      <div class="stat-box">
+        <span class="value" id="stat-total">0</span>
+        <span class="name">Check-ins</span>
+      </div>
+    </div>
+
+    <section class="card" aria-label="Daily check-in">
+      <h3>Today&apos;s check-in</h3>
+      <button type="button" class="checkin-btn" id="checkin-btn">Check in for today</button>
+      <p class="checkin-hint" id="checkin-hint">Tap once per day — your streak saves automatically in this browser.</p>
+    </section>
+
+    <section class="card" aria-label="Last seven days">
+      <h3>Last 7 days</h3>
+      <div class="week-track" id="week-track"></div>
+    </section>
+
+    <section class="card" aria-label="Tips">
+      <h3>Quick tips</h3>
+      <ul class="tips-list">
+        <li>Pair your check-in with something you already do, like morning tea or an evening wind-down.</li>
+        <li>Missed a day? That&apos;s okay — start fresh tomorrow without guilt.</li>
+        <li>Use the mood tracker or journal when you want to go deeper.</li>
+      </ul>
+      <div class="reset-row">
+        <button type="button" class="reset-btn" id="reset-btn">Reset streak data</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 MindHaven. All rights reserved.</p>
+    <p>Promoting Good Health and Well-being (SDG 3)</p>
+  </footer>
+
+  <script>
+    var STORAGE_KEY = "mindhavenStreak";
+
+    function dateKey(date) {
+      var y = date.getFullYear();
+      var m = String(date.getMonth() + 1).padStart(2, "0");
+      var d = String(date.getDate()).padStart(2, "0");
+      return y + "-" + m + "-" + d;
+    }
+
+    function todayKey() {
+      return dateKey(new Date());
+    }
+
+    function parseKey(key) {
+      var parts = key.split("-");
+      return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    }
+
+    function daysBetween(fromKey, toKey) {
+      var from = parseKey(fromKey);
+      var to = parseKey(toKey);
+      var msPerDay = 86400000;
+      return Math.round((to - from) / msPerDay);
+    }
+
+    function defaultData() {
+      return { current: 0, longest: 0, lastDate: null, dates: [] };
+    }
+
+    function getData() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return defaultData();
+        var data = JSON.parse(raw);
+        if (!Array.isArray(data.dates)) data.dates = [];
+        if (typeof data.current !== "number") data.current = 0;
+        if (typeof data.longest !== "number") data.longest = 0;
+        return data;
+      } catch (e) {
+        return defaultData();
+      }
+    }
+
+    function saveData(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function syncBrokenStreak(data) {
+      var today = todayKey();
+      if (data.lastDate && daysBetween(data.lastDate, today) > 1) {
+        data.current = 0;
+        saveData(data);
+      }
+      return data;
+    }
+
+    function hasCheckedInToday(data) {
+      return data.dates.indexOf(todayKey()) !== -1;
+    }
+
+    function showBanner(message, type) {
+      var banner = document.getElementById("status-banner");
+      banner.textContent = message;
+      banner.className = "status-banner is-visible " + type;
+    }
+
+    function hideBanner() {
+      var banner = document.getElementById("status-banner");
+      banner.className = "status-banner";
+      banner.textContent = "";
+    }
+
+    function renderWeek(data) {
+      var track = document.getElementById("week-track");
+      var today = todayKey();
+      track.innerHTML = "";
+
+      for (var i = 6; i >= 0; i--) {
+        var d = new Date();
+        d.setDate(d.getDate() - i);
+        var key = dateKey(d);
+        var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        var cell = document.createElement("div");
+        cell.className = "day-cell";
+
+        if (data.dates.indexOf(key) !== -1) {
+          cell.classList.add("done");
+        }
+        if (key === today) {
+          cell.classList.add("today");
+        }
+
+        var dot = document.createElement("span");
+        dot.className = "dot";
+        dot.setAttribute("aria-hidden", "true");
+        dot.textContent = data.dates.indexOf(key) !== -1 ? "✓" : "";
+
+        var name = document.createElement("span");
+        name.className = "day-name";
+        name.textContent = dayNames[d.getDay()];
+
+        cell.appendChild(dot);
+        cell.appendChild(name);
+        track.appendChild(cell);
+      }
+    }
+
+    function updateUI() {
+      var data = syncBrokenStreak(getData());
+      var today = todayKey();
+      var checkedToday = hasCheckedInToday(data);
+      var count = data.current;
+      var btn = document.getElementById("checkin-btn");
+      var hint = document.getElementById("checkin-hint");
+
+      document.getElementById("streak-count").textContent = String(count);
+      document.getElementById("streak-label").textContent = count === 1 ? "day streak" : "day streak";
+      document.getElementById("stat-current").textContent = String(count);
+      document.getElementById("stat-longest").textContent = String(data.longest);
+      document.getElementById("stat-total").textContent = String(data.dates.length);
+
+      if (checkedToday) {
+        btn.disabled = true;
+        btn.textContent = "Checked in today ✓";
+        hint.textContent = "Great job — come back tomorrow to keep your streak going.";
+      } else if (data.lastDate && daysBetween(data.lastDate, today) > 1) {
+        btn.disabled = false;
+        btn.textContent = "Start a new streak";
+        hint.textContent = "Your previous streak ended. One check-in starts fresh at day 1.";
+      } else {
+        btn.disabled = false;
+        btn.textContent = "Check in for today";
+        hint.textContent = "Tap once per day — your streak saves automatically in this browser.";
+      }
+
+      renderWeek(data);
+    }
+
+    function checkIn() {
+      var data = syncBrokenStreak(getData());
+      var today = todayKey();
+
+      if (hasCheckedInToday(data)) {
+        showBanner("You already checked in today. See you tomorrow!", "info");
+        return;
+      }
+
+      hideBanner();
+
+      if (!data.lastDate) {
+        data.current = 1;
+      } else if (daysBetween(data.lastDate, today) === 1) {
+        data.current += 1;
+      } else {
+        data.current = 1;
+      }
+
+      data.lastDate = today;
+      data.dates.push(today);
+      data.longest = Math.max(data.longest, data.current);
+      saveData(data);
+
+      var msg = data.current === 1
+        ? "Streak started! Day 1 is in the books."
+        : "Nice work! You're on a " + data.current + "-day streak.";
+      showBanner(msg, "success");
+      updateUI();
+    }
+
+    function resetStreak() {
+      if (confirm("Reset all streak data? This cannot be undone.")) {
+        localStorage.removeItem(STORAGE_KEY);
+        hideBanner();
+        updateUI();
+      }
+    }
+
+    document.getElementById("checkin-btn").addEventListener("click", checkIn);
+    document.getElementById("reset-btn").addEventListener("click", resetStreak);
+    updateUI();
+  </script>
+
+</body>
+</html>

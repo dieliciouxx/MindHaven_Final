@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindHaven | Feedback Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #4678a8;
+      --color-primary-dark: #3a628a;
+      --color-bg: #f5faf8;
+      --color-hero: #f7f2e5;
+      --color-text: #0b283a;
+      --color-text-muted: #3d5a6e;
+      --color-white: #ffffff;
+      --color-accent-soft: #dcebe6;
+      --color-tip-bg: #eef8f0;
+      --color-border: #d8e4df;
+      --color-input-bg: #f9fcfa;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 4px 20px rgba(11, 40, 58, 0.08);
+      --shadow-card: 0 8px 24px rgba(11, 40, 58, 0.06);
+      --shadow-btn: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 0.2s var(--ease-out);
+      --transition-smooth: 0.3s var(--ease-out);
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 40px;
+      --space-xl: 60px;
+      --max-width: 1200px;
+      --header-padding: 18px 8%;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--color-bg);
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      width: 340px;
+      height: 340px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(110, 180, 120, 0.14) 0%, transparent 72%);
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(70, 120, 168, 0.12) 0%, transparent 72%);
+    }
+
+    html::before {
+      content: "";
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      top: 35%;
+      right: -160px;
+      background: radial-gradient(circle, rgba(220, 235, 230, 0.45) 0%, transparent 70%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--header-padding);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(11, 40, 58, 0.12);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo-container h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.02em;
+    }
+
+    .navbar {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .navbar a:not(.get-started-btn):hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .navbar .get-started-btn {
+      background: var(--color-white);
+      color: var(--color-primary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-btn);
+      margin-left: var(--space-xs);
+    }
+
+    .navbar .get-started-btn:hover {
+      background: #f8fbfa;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    /* MAIN */
+    main {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: var(--space-md) auto var(--space-lg);
+      padding: 0 8%;
+    }
+
+    .page-intro {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .page-intro .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .page-intro h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+    }
+
+    .feedback-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      align-items: start;
+    }
+
+    /* LEFT SIDE */
+    .feedback-info {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-info::before {
+      content: "🌿";
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 3rem;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .feedback-visual {
+      margin-bottom: var(--space-md);
+      text-align: center;
+    }
+
+    .feedback-visual img {
+      max-width: 200px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      filter: drop-shadow(0 8px 20px rgba(11, 40, 58, 0.1));
+    }
+
+    .feedback-info h1 {
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-sm);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .feedback-info > p {
+      line-height: 1.7;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+      font-size: 1rem;
+    }
+
+    .tips {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tip-box {
+      background: var(--color-tip-bg);
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid rgba(11, 40, 58, 0.04);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .tip-box:hover {
+      transform: translateX(4px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .tip-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .tip-box div:last-child {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* FORM */
+    .feedback-form {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(11, 40, 58, 0.05);
+    }
+
+    .feedback-form h2 {
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .input-group {
+      margin-bottom: var(--space-sm);
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-input-bg);
+      outline: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--color-text);
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus,
+    .input-group select:focus {
+      border-color: var(--color-primary);
+      background: var(--color-white);
+      box-shadow: 0 0 0 3px rgba(70, 120, 168, 0.15);
+    }
+
+    .input-group textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--color-primary);
+      color: var(--color-white);
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: var(--space-xs);
+      transition:
+        background-color var(--transition-smooth),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .submit-btn:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(70, 120, 168, 0.35);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      text-align: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .site-footer p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+    }
+
+    .site-footer p + p {
+      margin-top: 6px;
+      font-size: 0.875rem;
+      opacity: 0.85;
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .navbar ul {
+        justify-content: center;
+      }
+
+      .navbar .get-started-btn {
+        margin-left: 0;
+      }
+
+      .feedback-container {
+        grid-template-columns: 1fr;
+      }
+
+      .feedback-info::before {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .tip-box:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="logo.png" alt="MindHaven Logo" />
+      <h1>MindHaven</h1>
+    </div>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contacts.html">Contacts</a></li>
+        <li><a href="get-started.html" class="get-started-btn">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-intro">
+      <p class="label">Feedback Hub</p>
+      <h2>Help us grow MindHaven together</h2>
+    </div>
+
+    <section class="feedback-container">
+      <div class="feedback-info">
+        <div class="feedback-visual">
+          <img src="image.jpg.png" alt="Cozy self-care illustration" />
+        </div>
+
+        <h1>Your voice matters</h1>
+
+        <p>
+          Share your thoughts, suggestions, and experiences to help us improve
+          MindHaven and create a more peaceful, supportive space for everyone.
+        </p>
+
+        <div class="tips">
+          <div class="tip-box">
+            <span class="tip-icon" aria-hidden="true">🍃</span>
+            <div>Share your honest experience with the website.</div>
+          </div>
+          <div class="tip-box">
+            <span class="tip-icon" aria-hidden="true">🌿</span>
+            <div>Suggest new features or improvements.</div>
+          </div>
+          <div class="tip-box">
+            <span class="tip-icon" aria-hidden="true">🪴</span>
+            <div>Help us create a calm and user-friendly platform.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-form">
+        <h2>Send Feedback</h2>
+
+        <form action="#" method="post">
+          <div class="input-group">
+            <label for="fb-name">Full Name</label>
+            <input type="text" id="fb-name" name="name" placeholder="Enter your name" />
+          </div>
+
+          <div class="input-group">
+            <label for="fb-email">Email Address</label>
+            <input type="email" id="fb-email" name="email" placeholder="Enter your email" required />
+          </div>
+
+          <div class="input-group">
+            <label for="fb-type">Feedback Type</label>
+            <select id="fb-type" name="type">
+              <option>General Feedback</option>
+              <option>Suggestion</option>
+              <option>Bug Report</option>
+              <option>Website Experience</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="fb-message">Your Message</label>
+            <textarea id="fb-message" name="message" placeholder="Write your feedback here..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Submit Feedback</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 MindHaven. All rights reserved.</p>
+    <p>Promoting Good Health and Well-being (SDG 3)</p>
+  </footer>
+
+</body>
+</html>
