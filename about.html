@@ -414,10 +414,11 @@
 
     /* QUOTE */
     .quote-wrap {
-      display: flex;
-      justify-content: center;
-      margin-bottom: var(--space-lg);
-    }
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+  margin-bottom: var(--space-lg);
+}
 
     .quote-box {
       background: var(--color-quote-bg);
@@ -440,6 +441,71 @@
       margin: 6px 0;
       font-weight: 700;
     }
+/* TEAM SECTION */
+
+.team-section {
+  margin-bottom: var(--space-xl);
+}
+
+.team-section h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.team-subtitle {
+  color: var(--color-text-muted);
+  margin-bottom: 25px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.team-card {
+  background: white;
+  border-radius: 16px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(70, 120, 168, 0.15);
+  transition: 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+}
+
+.team-card img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 3px solid #dce8f0;
+}
+
+.team-card h3 {
+  margin-bottom: 5px;
+  color: var(--color-text);
+  font-size: 1.1rem;
+}
+
+.team-card span {
+  display: block;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.team-card p {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
 
     /* FOOTER */
     .site-footer {
@@ -527,7 +593,7 @@
 
   <header class="site-header">
     <div class="logo-container">
-     <span class="logo-icon">🌿</span>
+      <span class="logo-icon">🌿</span>
       <h1>MindHaven</h1>
     </div>
 
@@ -621,6 +687,45 @@
         </p>
       </div>
     </section>
+
+<section class="team-section">
+  <h2>Meet the MindHaven Team</h2>
+  <p class="team-subtitle">
+    The passionate students behind MindHaven, working together to create a safe and supportive space for mental wellness.
+  </p>
+
+    <div class="team-grid">
+
+      <div class="team-card">
+        <img src="member1.jpg" alt="">
+        <h3>Ashely Isidoro</h3>
+        <span>Team Leader</span>
+        <p>Led the development team and contributed to building MindHaven.</p>
+      </div>
+    
+      <div class="team-card">
+        <img src="member2.jpg" alt="">
+        <h3>Derlyn Ramos</h3>
+        <span>Developer</span>
+        <p>Contributed to the development and improvement of MindHaven.</p>
+      </div>
+    
+      <div class="team-card">
+        <img src="member3.jpg" alt="">
+        <h3>Christopher Loreto</h3>
+        <span>Developer</span>
+        <p>Contributed to the development and improvement of MindHaven.</p>
+      </div>
+    
+      <div class="team-card">
+        <img src="member4.jpg" alt="">
+        <h3>Joseph Mecasio</h3>
+        <span>Developer</span>
+        <p>Contributed to the development and improvement of MindHaven.</p>
+      </div>
+    
+    </div>
+
 
     <div class="quote-wrap">
       <div class="quote-box">
