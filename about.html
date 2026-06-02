@@ -357,72 +357,60 @@
     }
 
     /* STORY */
-    .story-section {
-      display: flex;
-      gap: var(--space-lg);
-      align-items: center;
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      margin-bottom: var(--space-xl);
-      box-shadow: var(--shadow-card);
-      border: 1px solid rgba(11, 40, 58, 0.05);
-    }
+.story-section {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(11, 40, 58, 0.05);
+}
 
-    .story-brand {
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-md);
-      background: linear-gradient(145deg, var(--color-accent-soft) 0%, var(--color-accent-blue) 100%);
-      border-radius: var(--radius-md);
-      min-width: 200px;
-    }
+.story-brand {
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  min-width: 400px;
+}
 
-    .story-brand img {
-      width: 120px;
-      height: 120px;
-      object-fit: contain;
-      margin-bottom: var(--space-sm);
-      filter: drop-shadow(0 4px 12px rgba(11, 40, 58, 0.1));
-    }
+.story-brand img {
+  width: 400px;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 20px;
+  filter: drop-shadow(0 4px 12px rgba(11, 40, 58, 0.1));
+}
 
-    .story-brand span {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--color-primary);
-      letter-spacing: -0.02em;
-    }
+.story-text {
+  flex: 1;
+  min-width: 0;
+}
 
-    .story-text {
-      flex: 1;
-      min-width: 0;
-    }
+.story-text h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
 
-    .story-text h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      margin-bottom: var(--space-sm);
-      color: var(--color-text);
-      letter-spacing: -0.02em;
-    }
+.story-text p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  margin-bottom: var(--space-sm);
+  line-height: 1.6;
+}
 
-    .story-text p {
-      color: var(--color-text-muted);
-      font-size: 1rem;
-      margin-bottom: var(--space-sm);
-      line-height: 1.6;
-    }
+.story-text p:last-child {
+  margin-bottom: 0;
+}
 
-    .story-text p:last-child {
-      margin-bottom: 0;
-    }
-
-    .story-text strong {
-      color: var(--color-text);
-    }
+.story-text strong {
+  color: var(--color-text);
+}
 
     /* QUOTE */
     .quote-wrap {
@@ -617,8 +605,7 @@
 
     <section class="story-section" aria-label="Our story">
       <div class="story-brand">
-        <img src="logo.png" alt="MindHaven logo" />
-        <span>MindHaven</span>
+        <img src="our-story.jpg" alt="">
       </div>
       <div class="story-text">
         <h2>Our Story</h2>
